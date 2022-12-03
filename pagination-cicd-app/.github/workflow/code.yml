@@ -14,17 +14,17 @@ jobs:
     runs-on: ubuntu-latest
     steps
       - name: checkout code
-        uses: action/checkout@v3
+        uses: actions/checkout@v3
       - name: Install Node 16
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v3 
         with: 
           node-version: 16.x
       - name: Install dependencies
         run: npm i
-      - name: build Projects
+      - name: build Project
         run: npm run build
-      - name: upload artifact in orfer to deploy
-        uses: action/upload-actifact@v2
+      - name: upload artifact in order to deploy
+        uses: actions/upload-actifact@v2
         with:
           name: production-files
           path: ./build
@@ -34,14 +34,14 @@ deploy:
   runs-on: ubuntu-latest
   needs: build
   steps:
-    - name: Download actifacat
-      uses: action/download-artifact@v3
+    - name: Download actifact
+      uses: actions/download-artifact@v2
       with:
         name: production-files
         path: ./build
     -name: Deploy to github pages
-      uses: peaciris/actions-gh-pages@v3
+      uses: peaceiris/actions-gh-pages@v3
       with:
-        github-token: ${{GH_TOKEN}}
+        github-token: ${{secrets.GH_TOKEN}}
         publish_dir: .build
     
