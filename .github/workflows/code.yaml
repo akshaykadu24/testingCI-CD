@@ -30,20 +30,20 @@ jobs:
           name: production-files
           path: ./build
 
-deploy:
-  name: deploy
-  runs-on: ubuntu-latest
-  needs: build
+  deploy:
+    name: deploy
+    runs-on: ubuntu-latest
+    needs: build
 
-  steps:
-    - name: Download actifact
-      uses: actions/download-artifact@v2
-      with:
-        name: production-files
-        path: ./build
-    - name: Deploy to github pages
-      uses: peaceiris/actions-gh-pages@v3
-      with:
-        github-token: ${{secrets.GH_TOKEN}}
-        publish_dir: .build
-    
+    steps:
+      - name: Download actifact
+        uses: actions/download-artifact@v2
+        with:
+          name: production-files
+          path: ./build
+      - name: Deploy to github pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github-token: ${{secrets.GH_TOKEN}}
+          publish_dir: .build
+      
