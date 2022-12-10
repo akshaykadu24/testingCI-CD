@@ -1,20 +1,21 @@
-import { Box, Button, Heading, SimpleGrid, Text } from '@chakra-ui/react'
+import { Box, Heading, Text } from '@chakra-ui/react'
 import axios from 'axios'
-import React, { useEffect, useState } from 'react'
+import React, {  useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
 const SingleCard = () => {
     const [data,setData] = useState([])
-    const [singleData,setSingleData] = useState([])
+    // const [singleData,setSingleData] = useState([])
     const params = useParams()
     const {type,id} = params
     
-
+    
     const getData =()=>{
-      let responce = axios.get(`https://api.github.com/search/repositories?q=stars:%3E1+language:${type}`)
-      .then((res)=>setData(res.data.items.filter((el)=>el.id==id)))
+     axios.get(`https://api.github.com/search/repositories?q=stars:%3E1+language:${type}`)
+      .then((res)=>setData(res.data.items.filter((el)=>el.id===id)))
       .catch((err)=>console.log(err))
     }
+    
 //    let a= data.filter((el)=> el.id ==id)
 //     console.log(a)
     
@@ -22,7 +23,7 @@ const SingleCard = () => {
   console.log(data)
     useEffect(()=>{
       getData()
-    },[])
+    },[id])
 
     return (
       <Box>
